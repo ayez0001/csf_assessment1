@@ -3,8 +3,10 @@ import { MatSnackBar } from "@angular/material";
 import { Router } from "@angular/router";
 import { CountriesService } from '../services/countries.service';
 import { UsersService } from '../services/users.service';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 import { Registration } from '../models/Register';
+import * as moment from "moment";
 
 @Component({
   selector: 'app-registration',
@@ -18,6 +20,7 @@ export class RegistrationComponent implements OnInit {
     {name:'Male', value:'M'}, 
     {name:'Female', value:'F'}
   ];
+  ageCheckFlag: boolean = false;
 
   nationalities: any;
 
@@ -39,19 +42,21 @@ export class RegistrationComponent implements OnInit {
     })
   }
 
-  onSubmit(){
-    console.log(typeof this.model.dob);
+  checkAge() {
     let dobDate = new Date(this.model.dob);
-    dobDate.setFullYear(dobDate.getFullYear() + 18);
-    console.log(dobDate);
-    console.log(dobDate <= new Date());
-    if(dobDate <= new Date()){
+    const today = moment();
+    const delta = today.diff(dobDate, "years", false);
+    if (delta < 18) {
       console.log("less than !")
-      let snackBarRef = this.snackBar.open("Registrant must be at least 18 yrs old.", "Done", {
-        duration: 3000
-      });
-      return;
+      let snackBarRef = this.snackBar.open("Registrant must be at least 18 yrs old.", "Done");
+      this.ageCheckFlag = true;
+    }else{
+      this.ageCheckFlag = false;
     }
+  }
+
+  onSubmit(){
+    
     let registerUserObj = {
       email: this.model.email,
       password: this.model.password,
@@ -62,11 +67,15 @@ export class RegistrationComponent implements OnInit {
       country: this.model.country,
       contactNo: this.model.contactNo
     }
-    this.usersSvc.registerUser(registerUserObj);
-    let snackBarRef = this.snackBar.open("User registered!", "Done", {
-      duration: 3000
-    });
-    this.router.navigate(['confirm']);
+    this.checkAge();
+    if(!this.ageCheckFlag){
+      this.usersSvc.registerUser(registerUserObj);
+      let snackBarRef = this.snackBar.open("User registered!", "Done", {
+        duration: 3000
+      });
+      this.router.navigate(['confirm']);
+    }
+    
   }
 
   resetForm(){

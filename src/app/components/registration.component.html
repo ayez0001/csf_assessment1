@@ -46,14 +46,15 @@
             </mat-radio-group>
 
             <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Date of Birth" name="dob" #dateOfBirth="ngModel" [(ngModel)]="model.dob" required>
+                <input matInput [matDatepicker]="picker" placeholder="Date of Birth" name="dob" #dateOfBirth="ngModel" [(ngModel)]="model.dob" (dateChange)="checkAge('change', $event)" required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <div *ngIf="picker.errors && (picker.touched)">
                     <div *ngIf="picker.errors.required">
                         <mat-error [hidden]="!picker.errors.required && picker.dirty">Date of Birth is required</mat-error>
                     </div>  
-                </div> 
+                </div>
+                <mat-error *ngIf="ageCheckFlag">Registrant must be at least 18</mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -93,7 +94,7 @@
                 mat-raised-button
                 color="primary"
                 type="submit" 
-                [disabled]="regForm.invalid"
+                [disabled]="regForm.invalid || ageCheckFlag"
             >
             Submit
             </button>
