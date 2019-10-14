@@ -1,7 +1,7 @@
 <h3 mat-subheader>&nbsp;Registration Form</h3>
 <mat-card>
 <div class="example-container">
-    <form #regForm="ngForm" (ngSubmit)="onSubmit(regForm)" novalidate>
+    <form #regForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
         <!-- email field-->
         <div fxLayout="column" fxLayoutAlign="flex-start" fxLayoutGap="1vw">
             <mat-form-field>
@@ -46,12 +46,12 @@
             </mat-radio-group>
 
             <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Date of Birth" name="dob" #dateOfBirth="ngModel" [(ngModel)]="model.dob" (dateChange)="checkAge('change', $event)" required>
+                <input matInput [matDatepicker]="picker" placeholder="Date of Birth" name="dob" #dateOfBirth="ngModel" [(ngModel)]="model.dob" (dateChange)="checkAge()" required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <div *ngIf="picker.errors && (picker.touched)">
-                    <div *ngIf="picker.errors.required">
-                        <mat-error [hidden]="!picker.errors.required && picker.dirty">Date of Birth is required</mat-error>
+                <div *ngIf="dateOfBirth.errors && (dateOfBirth.touched)">
+                    <div *ngIf="dateOfBirth.errors.required">
+                        <mat-error [hidden]="!dateOfBirth.errors.required && dateOfBirth.dirty">Date of Birth is required</mat-error>
                     </div>  
                 </div>
                 <mat-error *ngIf="ageCheckFlag">Registrant must be at least 18</mat-error>
