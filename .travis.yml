@@ -20,12 +20,12 @@ before_script:
   - npm install -g @angular/cli
   
 script:
-  - ng build --prod --base-href https://kenken64.github.io/csf_assessment1/
+  - ng build --prod --base-href https://kenken64.github.io/assessment1/
   
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: dist/csf_assessment1
+  local_dir: dist/assessment1
   on:
     branch: master
