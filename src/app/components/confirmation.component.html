@@ -1,0 +1,28 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>Thanks for signing up! </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+        Email : {{model?.email}}
+        </p>
+        <p>
+        Name : {{model?.name}}
+        </p>
+        <p>
+        Gender : {{model?.gender}}
+        </p>
+        <p>
+        Date of Birth : {{model?.dob | date:'mediumDate'}}
+        </p>
+        <p>
+        Address : {{model?.address}}
+        </p>
+        <p>
+        Country : {{model?.country}}
+        </p>
+        <p>
+        Contact No. : {{model?.contactNo}}
+        </p>
+    </mat-card-content>
+</mat-card>
